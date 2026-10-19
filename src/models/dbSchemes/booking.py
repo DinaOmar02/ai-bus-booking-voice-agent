@@ -7,25 +7,20 @@ from sqlalchemy import (
     ForeignKey,
     Index,
     SmallInteger,
-    String,
     func,
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.enums.enum import BookingStatus
-from src.models.base import Base
-
-from src.models.dbSchemes.customer import Customer
-from src.models.dbSchemes.trip import Trip
+from src.models.dbSchemes.base import SQLAlchemyBase
 
 
-class Booking(Base):
+class Booking(SQLAlchemyBase):
     """A seat reservation on a trip, held in PENDING while awaiting payment."""
 
     __tablename__ = "bookings"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    booking_reference: Mapped[str] = mapped_column(String(16), nullable=False, unique=True)
     customer_id: Mapped[int] = mapped_column(
         ForeignKey("customers.id", ondelete="RESTRICT"), nullable=False
     )
@@ -51,8 +46,8 @@ class Booking(Base):
         DateTime(timezone=True), nullable=True
     )
 
-    customer: Mapped[Customer] = relationship(back_populates="bookings")
-    trip: Mapped[Trip] = relationship(back_populates="bookings")
+    customer: Mapped["Customer"] = relationship(back_populates="bookings")
+    trip: Mapped["Trip"] = relationship(back_populates="bookings")
 
     __table_args__ = (
         CheckConstraint("number_of_seats > 0", name="number_of_seats_positive"),
