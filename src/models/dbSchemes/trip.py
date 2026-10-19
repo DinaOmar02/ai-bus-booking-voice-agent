@@ -1,7 +1,4 @@
-from __future__ import annotations
-
 from datetime import date, datetime, time
-from typing import TYPE_CHECKING
 
 from sqlalchemy import (CheckConstraint, Date, DateTime, Enum, ForeignKey, Index,
     SmallInteger, Time, func)
@@ -9,14 +6,10 @@ from sqlalchemy import (CheckConstraint, Date, DateTime, Enum, ForeignKey, Index
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.enums.enum import TripStatus
-from src.models.base import Base
-
-if TYPE_CHECKING:
-    from src.models.dbSchemes.booking import Booking
-    from src.models.dbSchemes.route import Route
+from src.models.dbSchemes.base import SQLAlchemyBase
 
 
-class Trip(Base):
+class Trip(SQLAlchemyBase):
     #Example: Minya -> Cairo on 2026-10-05 at 08:00 with a capacity of 30.
 
     __tablename__ = "trips"
@@ -43,8 +36,8 @@ class Trip(Base):
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
 
-    route: Mapped[Route] = relationship(back_populates="trips")
-    bookings: Mapped[list[Booking]] = relationship(
+    route: Mapped["Route"] = relationship(back_populates="trips")
+    bookings: Mapped[list["Booking"]] = relationship(
         back_populates="trip", passive_deletes=True
     )
 

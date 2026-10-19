@@ -3,11 +3,10 @@ from datetime import datetime
 from sqlalchemy import DateTime, String, UniqueConstraint, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from src.models.base import Base
-from src.models.dbSchemes import Trip
+from src.models.dbSchemes.base import SQLAlchemyBase
 
 
-class Route(Base):
+class Route(SQLAlchemyBase):
 
     __tablename__ = "routes"
 
@@ -18,7 +17,7 @@ class Route(Base):
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
 
-    trips: Mapped[list[Trip]] = relationship(
+    trips: Mapped[list["Trip"]] = relationship(
         back_populates="route",
         passive_deletes=True,
         lazy="selectin",

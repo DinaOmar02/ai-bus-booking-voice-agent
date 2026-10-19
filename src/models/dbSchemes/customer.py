@@ -3,11 +3,10 @@ from datetime import datetime
 from sqlalchemy import DateTime, String, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from src.models.base import Base
-from src.models.dbSchemes.booking import Booking
+from src.models.dbSchemes.base import SQLAlchemyBase
 
 
-class Customer(Base):
+class Customer(SQLAlchemyBase):
     """A customer who can book seats on a trip."""
 
     __tablename__ = "customers"
@@ -19,6 +18,6 @@ class Customer(Base):
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
 
-    bookings: Mapped[list[Booking]] = relationship(
+    bookings: Mapped[list["Booking"]] = relationship(
         back_populates="customer", passive_deletes=True
     )
