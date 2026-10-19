@@ -1,0 +1,12 @@
+Generic single-database configuration.
+
+versions/ holds one .py file per schema change. Ordering comes from the
+down_revision chain inside the files, not from their filenames.
+
+Generate a new one with:
+
+    alembic -c src/models/alembic.ini revision --autogenerate -m "describe change"
+
+Autogenerate diffs src/models against a live database, so DATABASE_URL must
+point at a reachable instance. Always review the generated file before
+running it -- autogenerate does not catch every kind of change.
