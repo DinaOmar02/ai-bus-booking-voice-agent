@@ -1,5 +1,17 @@
+# PostgreSQL database configuration
 POSTGRES_PORT=
 POSTGRES_USERNAME=
 POSTGRES_PASSWORD=
 POSTGRES_DB=
 POSTGRES_HOST=
+
+# LiveKit Cloud configuration
+LIVEKIT_URL=
+LIVEKIT_API_KEY=
+LIVEKIT_API_SECRET=
+
+# Deepgram Speech-to-Text (STT) and Text-to-Speech (TTS)
+DEEPGRAM_API_KEY=
+
+# Groq Large Language Model (LLM)
+GROQ_API_KEY=
