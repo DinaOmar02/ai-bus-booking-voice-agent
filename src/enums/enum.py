@@ -1,7 +1,7 @@
-import enum
+from enum import Enum
 
 
-class TripStatus(str, enum.Enum):
+class TripStatusEnum(str, Enum):
     """Lifecycle status of a scheduled trip departure."""
 
     SCHEDULED = "SCHEDULED"
@@ -9,7 +9,7 @@ class TripStatus(str, enum.Enum):
     COMPLETED = "COMPLETED"
 
 
-class BookingStatus(str, enum.Enum):
+class BookingStatusEnum(str, Enum):
     """Lifecycle status of a seat reservation.
 
     A PENDING booking temporarily holds seats while the customer completes
@@ -21,3 +21,12 @@ class BookingStatus(str, enum.Enum):
     CONFIRMED = "CONFIRMED"
     CANCELLED = "CANCELLED"
     EXPIRED = "EXPIRED"
+
+
+class BookingHoldDurationEnum(int, Enum):
+    STANDARD_MINUTES = 10
+
+ACTIVE_BOOKING_STATUSES = [
+    BookingStatusEnum.PENDING,
+    BookingStatusEnum.CONFIRMED
+]
