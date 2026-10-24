@@ -2,7 +2,7 @@ from datetime import date, time
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.enums import ACTIVE_BOOKING_STATUSES, TripStatus
+from src.enums import ACTIVE_BOOKING_STATUSES, TripStatusEnum
 from src.models.dbSchemes.booking import Booking
 from src.models.dbSchemes.route import Route
 from src.models.dbSchemes.trip import Trip
@@ -41,7 +41,7 @@ class TripModel:
                 Route.origin == origin,
                 Route.destination == destination,
                 Trip.departure_date == departure_date,
-                Trip.status == TripStatus.SCHEDULED,
+                Trip.status == TripStatusEnum.SCHEDULED,
             )
             .order_by(Trip.departure_time)
         )
