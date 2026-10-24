@@ -11,7 +11,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from src.enums.enum import BookingStatus
+from src.enums import BookingStatusEnum
 from src.models.dbSchemes.base import SQLAlchemyBase
 
 
@@ -28,16 +28,16 @@ class Booking(SQLAlchemyBase):
         ForeignKey("trips.id", ondelete="RESTRICT"), nullable=False
     )
     number_of_seats: Mapped[int] = mapped_column(SmallInteger, nullable=False)
-    status: Mapped[BookingStatus] = mapped_column(
+    status: Mapped[BookingStatusEnum] = mapped_column(
         Enum(
-            BookingStatus,
+            BookingStatusEnum,
             name="booking_status",
             native_enum=False,
             create_constraint=True,
             values_callable=lambda e: [m.value for m in e],
         ),
         nullable=False,
-        server_default=BookingStatus.PENDING.value,
+        server_default=BookingStatusEnum.PENDING.value,
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False

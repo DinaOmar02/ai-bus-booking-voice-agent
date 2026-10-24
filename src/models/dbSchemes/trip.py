@@ -5,7 +5,7 @@ from sqlalchemy import (CheckConstraint, Date, DateTime, Enum, ForeignKey, Index
 
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from src.enums.enum import TripStatus
+from src.enums.enum import TripStatusEnum
 from src.models.dbSchemes.base import SQLAlchemyBase
 
 
@@ -21,16 +21,16 @@ class Trip(SQLAlchemyBase):
     departure_date: Mapped[date] = mapped_column(Date, nullable=False)
     departure_time: Mapped[time] = mapped_column(Time, nullable=False)
     capacity: Mapped[int] = mapped_column(SmallInteger, nullable=False)
-    status: Mapped[TripStatus] = mapped_column(
+    status: Mapped[TripStatusEnum] = mapped_column(
         Enum(
-            TripStatus,
+            TripStatusEnum,
             name="trip_status",
             native_enum=False,
             create_constraint=True,
             values_callable=lambda e: [m.value for m in e],
         ),
         nullable=False,
-        server_default=TripStatus.SCHEDULED.value,
+        server_default=TripStatusEnum.SCHEDULED.value,
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
